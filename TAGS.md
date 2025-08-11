@@ -1,0 +1,1 @@
+serialization; json; serialization-provider; provider-pattern; abstractions; newtonsoft-json; system-text-json; dotnet; csharp; net6; net7; net8; net9; netstandard; dependency-injection; adapter-pattern; consistent-api; ktsu; json-serialization; deserialization; multi-target; error-handling
