@@ -1,6 +1,6 @@
 MIT License
 
-https://github.com/ktsu-dev/Abstractions
+https://github.com/ktsu-dev/Common
 
 Copyright (c) 2023-2025 ktsu-dev
 

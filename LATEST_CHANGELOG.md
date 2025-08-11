@@ -1,3 +1,3 @@
-## v1.0.0
+## v1.0.0-pre.0 (major)
 
-No significant changes detected since v1.0.0.
+- Initial commit ([@matt-edmondson](https://github.com/matt-edmondson))
