@@ -2,7 +2,7 @@
 // All rights reserved.
 // Licensed under the MIT license.
 
-namespace ktsu.SerializationProvider;
+namespace ktsu.SerializationProviders;
 
 using System;
 using System.IO;

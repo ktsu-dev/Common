@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- https://learn.microsoft.com/dotnet/fundamentals/package-validation/diagnostic-ids -->
+<Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Suppression>
+    <DiagnosticId>CP0016</DiagnosticId>
+    <Target>M:ktsu.EncryptionProviders.Aes.GenerateIV:[T:System.Runtime.CompilerServices.NullableContextAttribute]</Target>
+    <Left>lib/net7.0/ktsu.EncryptionProviders.Aes.dll</Left>
+    <Right>lib/net8.0/ktsu.EncryptionProviders.Aes.dll</Right>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0016</DiagnosticId>
+    <Target>M:ktsu.EncryptionProviders.Aes.GenerateKey:[T:System.Runtime.CompilerServices.NullableContextAttribute]</Target>
+    <Left>lib/net7.0/ktsu.EncryptionProviders.Aes.dll</Left>
+    <Right>lib/net8.0/ktsu.EncryptionProviders.Aes.dll</Right>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0016</DiagnosticId>
+    <Target>M:ktsu.EncryptionProviders.Aes.TryDecrypt(System.IO.Stream,System.ReadOnlySpan{System.Byte},System.ReadOnlySpan{System.Byte},System.IO.Stream)$0:[T:System.Runtime.CompilerServices.NullableAttribute]</Target>
+    <Left>lib/net7.0/ktsu.EncryptionProviders.Aes.dll</Left>
+    <Right>lib/net8.0/ktsu.EncryptionProviders.Aes.dll</Right>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0016</DiagnosticId>
+    <Target>M:ktsu.EncryptionProviders.Aes.TryDecrypt(System.IO.Stream,System.ReadOnlySpan{System.Byte},System.ReadOnlySpan{System.Byte},System.IO.Stream)$3:[T:System.Runtime.CompilerServices.NullableAttribute]</Target>
+    <Left>lib/net7.0/ktsu.EncryptionProviders.Aes.dll</Left>
+    <Right>lib/net8.0/ktsu.EncryptionProviders.Aes.dll</Right>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0016</DiagnosticId>
+    <Target>M:ktsu.EncryptionProviders.Aes.TryEncrypt(System.IO.Stream,System.ReadOnlySpan{System.Byte},System.ReadOnlySpan{System.Byte},System.IO.Stream)$0:[T:System.Runtime.CompilerServices.NullableAttribute]</Target>
+    <Left>lib/net7.0/ktsu.EncryptionProviders.Aes.dll</Left>
+    <Right>lib/net8.0/ktsu.EncryptionProviders.Aes.dll</Right>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0016</DiagnosticId>
+    <Target>M:ktsu.EncryptionProviders.Aes.TryEncrypt(System.IO.Stream,System.ReadOnlySpan{System.Byte},System.ReadOnlySpan{System.Byte},System.IO.Stream)$3:[T:System.Runtime.CompilerServices.NullableAttribute]</Target>
+    <Left>lib/net7.0/ktsu.EncryptionProviders.Aes.dll</Left>
+    <Right>lib/net8.0/ktsu.EncryptionProviders.Aes.dll</Right>
+  </Suppression>
+</Suppressions>

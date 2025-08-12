@@ -3,8 +3,8 @@
 <Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Suppression>
     <DiagnosticId>CP0016</DiagnosticId>
-    <Target>M:ktsu.HashProvider.MD5HashProvider.TryHash(System.IO.Stream,System.Span{System.Byte})$0:[T:System.Runtime.CompilerServices.NullableAttribute]</Target>
-    <Left>lib/net7.0/ktsu.HashProviders.MD5HashProvider.dll</Left>
-    <Right>lib/net8.0/ktsu.HashProviders.MD5HashProvider.dll</Right>
+    <Target>M:ktsu.HashProviders.MD5.TryHash(System.IO.Stream,System.Span{System.Byte})$0:[T:System.Runtime.CompilerServices.NullableAttribute]</Target>
+    <Left>lib/net7.0/ktsu.HashProviders.MD5.dll</Left>
+    <Right>lib/net8.0/ktsu.HashProviders.MD5.dll</Right>
   </Suppression>
 </Suppressions>

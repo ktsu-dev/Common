@@ -3,11 +3,37 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerializationProviders/SystemTextJson", "SerializationProviders/SystemTextJson/SerializationProviders.SystemTextJson.csproj", "{E15E491A-E872-91D8-DF7A-CA59C792F064}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemTextJson", "SerializationProviders\SystemTextJson\SystemTextJson.csproj", "{E15E491A-E872-91D8-DF7A-CA59C792F064}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerializationProviders/NewtonsoftJson", "SerializationProviders/NewtonsoftJson/SerializationProviders.NewtonsoftJson.csproj", "{0E096F31-567C-F8D8-0D9E-A3EA66C5C022}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewtonsoftJson", "SerializationProviders\NewtonsoftJson\NewtonsoftJson.csproj", "{0E096F31-567C-F8D8-0D9E-A3EA66C5C022}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HashProviders/MD5HashProvider", "HashProviders/MD5HashProvider/HashProviders.MD5HashProvider.csproj", "{E0619188-2081-464B-B5D2-E165156C0D55}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MD5", "HashProviders\MD5\MD5.csproj", "{E0619188-2081-464B-B5D2-E165156C0D55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SHA256", "HashProviders\SHA256\SHA256.csproj", "{9AE15108-1CAF-47F0-9701-0E1F51A6B0E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SHA1", "HashProviders\SHA1\SHA1.csproj", "{88B0D669-32B8-49EE-86F7-F7156345F44B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gzip", "CompressionProviders\Gzip\Gzip.csproj", "{C4DB8FE4-35A2-4065-AA73-F2AC9BD86869}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aes", "EncryptionProviders\Aes\Aes.csproj", "{A0EB31F2-B08E-4017-94DB-048B93E22EAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base64", "ObfuscationProviders\Base64\Base64.csproj", "{8664BACB-A355-49E6-AF19-025D92A58F54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Native", "FileSystemProviders\Native\Native.csproj", "{7EC854E2-D3C0-4975-8BB9-9100832D1983}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CompressionProviders", "CompressionProviders", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EncryptionProviders", "EncryptionProviders", "{CAE9B03B-FF6F-40CF-B16D-5213BF044EE8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FileSystemProviders", "FileSystemProviders", "{B3FD994D-B35D-4D99-A888-D85B96C7D888}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HashProviders", "HashProviders", "{4A2364E7-68B4-40FD-A5CF-885851EC271C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ObfuscationProviders", "ObfuscationProviders", "{E2FCC221-59EE-4937-8BFC-79873724EA2A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SerializationProviders", "SerializationProviders", "{81A638BB-9591-4F9F-BF51-41B09A245DC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Tests", "Common.Tests\Common.Tests.csproj", "{56D40661-FBE5-410C-BBEF-BEE428E2693E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,9 +53,48 @@ Global
 		{E0619188-2081-464B-B5D2-E165156C0D55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0619188-2081-464B-B5D2-E165156C0D55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0619188-2081-464B-B5D2-E165156C0D55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AE15108-1CAF-47F0-9701-0E1F51A6B0E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AE15108-1CAF-47F0-9701-0E1F51A6B0E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AE15108-1CAF-47F0-9701-0E1F51A6B0E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AE15108-1CAF-47F0-9701-0E1F51A6B0E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88B0D669-32B8-49EE-86F7-F7156345F44B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88B0D669-32B8-49EE-86F7-F7156345F44B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88B0D669-32B8-49EE-86F7-F7156345F44B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88B0D669-32B8-49EE-86F7-F7156345F44B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4DB8FE4-35A2-4065-AA73-F2AC9BD86869}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4DB8FE4-35A2-4065-AA73-F2AC9BD86869}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4DB8FE4-35A2-4065-AA73-F2AC9BD86869}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4DB8FE4-35A2-4065-AA73-F2AC9BD86869}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0EB31F2-B08E-4017-94DB-048B93E22EAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0EB31F2-B08E-4017-94DB-048B93E22EAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0EB31F2-B08E-4017-94DB-048B93E22EAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0EB31F2-B08E-4017-94DB-048B93E22EAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8664BACB-A355-49E6-AF19-025D92A58F54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8664BACB-A355-49E6-AF19-025D92A58F54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8664BACB-A355-49E6-AF19-025D92A58F54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8664BACB-A355-49E6-AF19-025D92A58F54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EC854E2-D3C0-4975-8BB9-9100832D1983}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EC854E2-D3C0-4975-8BB9-9100832D1983}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EC854E2-D3C0-4975-8BB9-9100832D1983}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EC854E2-D3C0-4975-8BB9-9100832D1983}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56D40661-FBE5-410C-BBEF-BEE428E2693E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56D40661-FBE5-410C-BBEF-BEE428E2693E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56D40661-FBE5-410C-BBEF-BEE428E2693E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56D40661-FBE5-410C-BBEF-BEE428E2693E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E15E491A-E872-91D8-DF7A-CA59C792F064} = {81A638BB-9591-4F9F-BF51-41B09A245DC2}
+		{0E096F31-567C-F8D8-0D9E-A3EA66C5C022} = {81A638BB-9591-4F9F-BF51-41B09A245DC2}
+		{E0619188-2081-464B-B5D2-E165156C0D55} = {4A2364E7-68B4-40FD-A5CF-885851EC271C}
+		{9AE15108-1CAF-47F0-9701-0E1F51A6B0E1} = {4A2364E7-68B4-40FD-A5CF-885851EC271C}
+		{88B0D669-32B8-49EE-86F7-F7156345F44B} = {4A2364E7-68B4-40FD-A5CF-885851EC271C}
+		{C4DB8FE4-35A2-4065-AA73-F2AC9BD86869} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{A0EB31F2-B08E-4017-94DB-048B93E22EAB} = {CAE9B03B-FF6F-40CF-B16D-5213BF044EE8}
+		{8664BACB-A355-49E6-AF19-025D92A58F54} = {E2FCC221-59EE-4937-8BFC-79873724EA2A}
+		{7EC854E2-D3C0-4975-8BB9-9100832D1983} = {B3FD994D-B35D-4D99-A888-D85B96C7D888}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2E50CC6F-8A09-4887-8D00-978187B49416}
