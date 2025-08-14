@@ -33,6 +33,8 @@ public class Base64 : IObfuscationProvider
 			}
 
 			obfuscatedData.CopyTo(destination);
+			// Clear the rest of the destination buffer to ensure only obfuscated data is present
+			destination[obfuscatedData.Length..].Clear();
 			return true;
 		}
 		catch (ArgumentException)
@@ -98,7 +100,24 @@ public class Base64 : IObfuscationProvider
 	{
 		try
 		{
-			string base64String = Encoding.UTF8.GetString(data);
+			// Find the actual length of obfuscated data (excluding trailing zeros)
+			ReadOnlySpan<byte> actualData = data;
+			int lastNonZero = data.Length - 1;
+			while (lastNonZero >= 0 && data[lastNonZero] == 0)
+			{
+				lastNonZero--;
+			}
+
+			if (lastNonZero >= 0)
+			{
+				actualData = data[..(lastNonZero + 1)];
+			}
+			else
+			{
+				return false; // All zeros is not valid obfuscated data
+			}
+
+			string base64String = Encoding.UTF8.GetString(actualData);
 			byte[] deobfuscatedData = Convert.FromBase64String(base64String);
 
 			if (deobfuscatedData.Length > destination.Length)
@@ -107,6 +126,8 @@ public class Base64 : IObfuscationProvider
 			}
 
 			deobfuscatedData.CopyTo(destination);
+			// Clear the rest of the destination buffer
+			destination[deobfuscatedData.Length..].Clear();
 			return true;
 		}
 		catch (ArgumentException)

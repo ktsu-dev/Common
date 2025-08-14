@@ -20,8 +20,6 @@ public class Aes : IEncryptionProvider, IDisposable
 
 	private readonly Lazy<System.Security.Cryptography.Aes> _aes;
 	private readonly Lazy<System.Security.Cryptography.Aes> _generator;
-	private readonly Lazy<ICryptoTransform> _encryptor;
-	private readonly Lazy<ICryptoTransform> _decryptor;
 
 	/// <summary>
 	/// Creates a new instance of the <see cref="Aes"/> class.
@@ -30,8 +28,6 @@ public class Aes : IEncryptionProvider, IDisposable
 	{
 		_aes = new(System.Security.Cryptography.Aes.Create);
 		_generator = new(System.Security.Cryptography.Aes.Create);
-		_encryptor = new(_aes.Value.CreateEncryptor);
-		_decryptor = new(_aes.Value.CreateDecryptor);
 	}
 
 	/// <summary>
@@ -74,7 +70,8 @@ public class Aes : IEncryptionProvider, IDisposable
 			_aes.Value.Key = key.ToArray();
 			_aes.Value.IV = iv.ToArray();
 
-			byte[] encryptedData = _encryptor.Value.TransformFinalBlock(data.ToArray(), 0, data.Length);
+			using ICryptoTransform encryptor = _aes.Value.CreateEncryptor();
+			byte[] encryptedData = encryptor.TransformFinalBlock(data.ToArray(), 0, data.Length);
 
 			if (encryptedData.Length > destination.Length)
 			{
@@ -82,6 +79,8 @@ public class Aes : IEncryptionProvider, IDisposable
 			}
 
 			encryptedData.CopyTo(destination);
+			// Clear the rest of the destination buffer to ensure only encrypted data is present
+			destination[encryptedData.Length..].Clear();
 			return true;
 		}
 		catch (ArgumentException)
@@ -118,7 +117,8 @@ public class Aes : IEncryptionProvider, IDisposable
 			_aes.Value.Key = key.ToArray();
 			_aes.Value.IV = iv.ToArray();
 
-			using CryptoStream cryptoStream = new(destination, _encryptor.Value, CryptoStreamMode.Write, leaveOpen: true);
+			using ICryptoTransform encryptor = _aes.Value.CreateEncryptor();
+			using CryptoStream cryptoStream = new(destination, encryptor, CryptoStreamMode.Write, leaveOpen: true);
 			data.CopyTo(cryptoStream);
 			return true;
 		}
@@ -160,7 +160,25 @@ public class Aes : IEncryptionProvider, IDisposable
 			_aes.Value.Key = key.ToArray();
 			_aes.Value.IV = iv.ToArray();
 
-			byte[] decryptedData = _decryptor.Value.TransformFinalBlock(data.ToArray(), 0, data.Length);
+			// Find the actual length of encrypted data (excluding trailing zeros)
+			ReadOnlySpan<byte> actualData = data;
+			int lastNonZero = data.Length - 1;
+			while (lastNonZero >= 0 && data[lastNonZero] == 0)
+			{
+				lastNonZero--;
+			}
+
+			if (lastNonZero >= 0)
+			{
+				actualData = data[..(lastNonZero + 1)];
+			}
+			else
+			{
+				return false; // All zeros is not valid encrypted data
+			}
+
+			using ICryptoTransform decryptor = _aes.Value.CreateDecryptor();
+			byte[] decryptedData = decryptor.TransformFinalBlock(actualData.ToArray(), 0, actualData.Length);
 
 			if (decryptedData.Length > destination.Length)
 			{
@@ -168,6 +186,8 @@ public class Aes : IEncryptionProvider, IDisposable
 			}
 
 			decryptedData.CopyTo(destination);
+			// Clear the rest of the destination buffer
+			destination[decryptedData.Length..].Clear();
 			return true;
 		}
 		catch (ArgumentException)
@@ -204,7 +224,8 @@ public class Aes : IEncryptionProvider, IDisposable
 			_aes.Value.Key = key.ToArray();
 			_aes.Value.IV = iv.ToArray();
 
-			using CryptoStream cryptoStream = new(data, _decryptor.Value, CryptoStreamMode.Read, leaveOpen: true);
+			using ICryptoTransform decryptor = _aes.Value.CreateDecryptor();
+			using CryptoStream cryptoStream = new(data, decryptor, CryptoStreamMode.Read, leaveOpen: true);
 			cryptoStream.CopyTo(destination);
 			return true;
 		}
@@ -235,16 +256,6 @@ public class Aes : IEncryptionProvider, IDisposable
 		{
 			if (disposing)
 			{
-				if (_encryptor.IsValueCreated)
-				{
-					_encryptor.Value.Dispose();
-				}
-
-				if (_decryptor.IsValueCreated)
-				{
-					_decryptor.Value.Dispose();
-				}
-
 				if (_aes.IsValueCreated)
 				{
 					_aes.Value.Dispose();

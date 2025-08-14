@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://learn.microsoft.com/dotnet/fundamentals/package-validation/diagnostic-ids -->
+<Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Suppression>
+    <DiagnosticId>CP0016</DiagnosticId>
+    <Target>M:ktsu.HashProviders.FNV1a_32.TryHash(System.IO.Stream,System.Span{System.Byte})$0:[T:System.Runtime.CompilerServices.NullableAttribute]</Target>
+    <Left>lib/net7.0/ktsu.HashProviders.FNV1a_32.dll</Left>
+    <Right>lib/net8.0/ktsu.HashProviders.FNV1a_32.dll</Right>
+  </Suppression>
+</Suppressions>

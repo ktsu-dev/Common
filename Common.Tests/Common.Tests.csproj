@@ -5,6 +5,7 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <TargetFrameworks>net9.0;</TargetFrameworks>
+    <NoWarn>$(NoWarn);CA1062;</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +20,12 @@
     <ProjectReference Include="..\HashProviders\MD5\MD5.csproj" />
     <ProjectReference Include="..\HashProviders\SHA1\SHA1.csproj" />
     <ProjectReference Include="..\HashProviders\SHA256\SHA256.csproj" />
+    <ProjectReference Include="..\HashProviders\SHA384\SHA384.csproj" />
+    <ProjectReference Include="..\HashProviders\SHA512\SHA512.csproj" />
+    <ProjectReference Include="..\HashProviders\FNV1_32\FNV1_32.csproj" />
+    <ProjectReference Include="..\HashProviders\FNV1a_32\FNV1a_32.csproj" />
+    <ProjectReference Include="..\HashProviders\FNV1_64\FNV1_64.csproj" />
+    <ProjectReference Include="..\HashProviders\FNV1a_64\FNV1a_64.csproj" />
     <ProjectReference Include="..\ObfuscationProviders\Base64\Base64.csproj" />
     <ProjectReference Include="..\SerializationProviders\NewtonsoftJson\NewtonsoftJson.csproj" />
     <ProjectReference Include="..\SerializationProviders\SystemTextJson\SystemTextJson.csproj" />
