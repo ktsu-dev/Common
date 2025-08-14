@@ -1,3 +1,5 @@
-## v1.0.1-pre.1 (prerelease)
+## v1.0.1 (patch)
 
 Changes since v1.0.0:
+
+- Add SHA384 and SHA512 hash providers, along with FNV1_32, FNV1a_32, FNV1_64, and FNV1a_64 implementations. Update Common.sln and add corresponding unit tests for all new providers. Enhance existing tests for dependency injection and serialization. Include necessary project files and suppressions for compatibility. ([@matt-edmondson](https://github.com/matt-edmondson))
