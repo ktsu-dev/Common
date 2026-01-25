@@ -93,9 +93,9 @@ public class RoundTripTests
 	public void Compression_Async_Roundtrip(ICompressionProvider compressor, string providerName)
 	{
 		byte[] original = Encoding.UTF8.GetBytes("async compression with " + providerName);
-		byte[] compressed = compressor.CompressAsync(original, TestContext.CancellationTokenSource.Token).Result;
+		byte[] compressed = compressor.CompressAsync(original, TestContext.CancellationToken).Result;
 		Assert.IsGreaterThan(0, compressed.Length, $"{providerName} async should produce compressed output");
-		byte[] decompressed = compressor.DecompressAsync(compressed, TestContext.CancellationTokenSource.Token).Result;
+		byte[] decompressed = compressor.DecompressAsync(compressed, TestContext.CancellationToken).Result;
 		CollectionAssert.AreEqual(original, decompressed, $"{providerName} async should decompress to original data");
 	}
 
@@ -174,10 +174,10 @@ public class RoundTripTests
 		byte[] key = encryptor.GenerateKey();
 		byte[] iv = encryptor.GenerateIV();
 
-		byte[] encrypted = encryptor.EncryptAsync(data, key, iv, TestContext.CancellationTokenSource.Token).Result;
+		byte[] encrypted = encryptor.EncryptAsync(data, key, iv, TestContext.CancellationToken).Result;
 		Assert.IsGreaterThan(0, encrypted.Length, $"{providerName} async should produce encrypted output");
 
-		byte[] decrypted = encryptor.DecryptAsync(encrypted, key, iv, TestContext.CancellationTokenSource.Token).Result;
+		byte[] decrypted = encryptor.DecryptAsync(encrypted, key, iv, TestContext.CancellationToken).Result;
 		CollectionAssert.AreEqual(data, decrypted, $"{providerName} async should decrypt to original data");
 	}
 
@@ -249,13 +249,13 @@ public class RoundTripTests
 
 		using MemoryStream reader = new(original);
 		using MemoryStream writer = new();
-		bool ok = obfuscator.TryObfuscateAsync(reader, writer, TestContext.CancellationTokenSource.Token).Result;
+		bool ok = obfuscator.TryObfuscateAsync(reader, writer, TestContext.CancellationToken).Result;
 		Assert.IsTrue(ok, $"{providerName} async should successfully obfuscate");
 
 		// Reset writer position to beginning for reading
 		writer.Position = 0;
 		using MemoryStream round = new();
-		bool deok = obfuscator.TryDeobfuscateAsync(writer, round, TestContext.CancellationTokenSource.Token).Result;
+		bool deok = obfuscator.TryDeobfuscateAsync(writer, round, TestContext.CancellationToken).Result;
 		Assert.IsTrue(deok, $"{providerName} async should successfully deobfuscate");
 
 		byte[] result = round.ToArray();
@@ -290,14 +290,14 @@ public class RoundTripTests
 
 		// Use TrySerializeAsync with TextWriter
 		using StringWriter writer = new();
-		bool serializeResult = serializer.TrySerializeAsync(original, writer, TestContext.CancellationTokenSource.Token).Result;
+		bool serializeResult = serializer.TrySerializeAsync(original, writer, TestContext.CancellationToken).Result;
 		Assert.IsTrue(serializeResult, $"{providerName} async should serialize successfully");
 		string json = writer.ToString();
 		Assert.IsFalse(string.IsNullOrEmpty(json), $"{providerName} async should produce serialized output");
 
 		// Use DeserializeAsync with ReadOnlyMemory<byte>
 		byte[] jsonBytes = Encoding.UTF8.GetBytes(json);
-		TestObject? deserialized = serializer.DeserializeAsync<TestObject>(jsonBytes, TestContext.CancellationTokenSource.Token).Result;
+		TestObject? deserialized = serializer.DeserializeAsync<TestObject>(jsonBytes, TestContext.CancellationToken).Result;
 		Assert.IsNotNull(deserialized, $"{providerName} async should deserialize to non-null object");
 		Assert.AreEqual(original.Name, deserialized.Name, $"{providerName} async should preserve Name property");
 		Assert.AreEqual(original.Value, deserialized.Value, $"{providerName} async should preserve Value property");

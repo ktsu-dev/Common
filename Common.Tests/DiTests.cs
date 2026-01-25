@@ -78,7 +78,7 @@ public class DiTests
 		IEnumerable<IHashProvider> hashProviders = serviceProvider.GetServices<IHashProvider>();
 		IHashProvider[] providers = [.. hashProviders];
 
-		Assert.AreEqual(9, providers.Length, "Should resolve all 9 hash providers");
+		Assert.HasCount(9, providers, "Should resolve all 9 hash providers");
 
 		// Verify all expected types are present
 		string[] expectedTypes = ["MD5", "SHA1", "SHA256", "SHA384", "SHA512", "FNV1_32", "FNV1a_32", "FNV1_64", "FNV1a_64"];
@@ -94,7 +94,7 @@ public class DiTests
 		IEnumerable<ISerializationProvider> serializationProviders = serviceProvider.GetServices<ISerializationProvider>();
 		ISerializationProvider[] providers = [.. serializationProviders];
 
-		Assert.AreEqual(2, providers.Length, "Should resolve both serialization providers");
+		Assert.HasCount(2, providers, "Should resolve both serialization providers");
 
 		// Verify all expected types are present
 		string[] expectedTypes = ["NewtonsoftJson", "SystemTextJson"];

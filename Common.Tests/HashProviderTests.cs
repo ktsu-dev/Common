@@ -32,7 +32,7 @@ public class HashProviderTests
 	{
 		byte[] data = Encoding.UTF8.GetBytes("hash me with " + providerName);
 		byte[] result = provider.Hash(data);
-		Assert.AreEqual(provider.HashLengthBytes, result.Length, $"{providerName} should produce hash of correct length");
+		Assert.HasCount(provider.HashLengthBytes, result, $"{providerName} should produce hash of correct length");
 	}
 
 	[TestMethod]
@@ -66,18 +66,18 @@ public class HashProviderTests
 		byte[] data = Encoding.UTF8.GetBytes("async hash with " + providerName);
 
 		// Test HashAsync
-		byte[] result = provider.HashAsync(data, TestContext.CancellationTokenSource.Token).Result;
-		Assert.AreEqual(provider.HashLengthBytes, result.Length, $"{providerName} async should produce correct length");
+		byte[] result = provider.HashAsync(data, TestContext.CancellationToken).Result;
+		Assert.HasCount(provider.HashLengthBytes, result, $"{providerName} async should produce correct length");
 
 		// Test TryHashAsync with byte array
 		byte[] dest = new byte[provider.HashLengthBytes];
-		bool tryOk = provider.TryHashAsync(data, dest, TestContext.CancellationTokenSource.Token).Result;
+		bool tryOk = provider.TryHashAsync(data, dest, TestContext.CancellationToken).Result;
 		Assert.IsTrue(tryOk, $"{providerName} async should return true for sufficient buffer");
 
 		// Test TryHashAsync with stream
 		using MemoryStream stream = new(data);
 		Array.Fill(dest, (byte)0);
-		bool tryStreamOk = provider.TryHashAsync(stream, dest, TestContext.CancellationTokenSource.Token).Result;
+		bool tryStreamOk = provider.TryHashAsync(stream, dest, TestContext.CancellationToken).Result;
 		Assert.IsTrue(tryStreamOk, $"{providerName} async should hash streams successfully");
 	}
 
@@ -87,7 +87,7 @@ public class HashProviderTests
 	{
 		string testString = "string hash test with " + providerName;
 		byte[] result = provider.Hash(testString);
-		Assert.AreEqual(provider.HashLengthBytes, result.Length, $"{providerName} should produce correct length for string input");
+		Assert.HasCount(provider.HashLengthBytes, result, $"{providerName} should produce correct length for string input");
 		Assert.IsTrue(result.Any(b => b != 0), $"{providerName} should not produce all zero hash");
 	}
 
@@ -97,7 +97,7 @@ public class HashProviderTests
 	{
 		byte[] emptyInput = [];
 		byte[] result = provider.Hash(emptyInput);
-		Assert.AreEqual(provider.HashLengthBytes, result.Length, $"{providerName} should produce correct length for empty input");
+		Assert.HasCount(provider.HashLengthBytes, result, $"{providerName} should produce correct length for empty input");
 	}
 
 	[TestMethod]
@@ -131,7 +131,7 @@ public class HashProviderTests
 		Random.Shared.NextBytes(largeInput);
 
 		byte[] result = provider.Hash(largeInput);
-		Assert.AreEqual(provider.HashLengthBytes, result.Length, $"{providerName} should handle large inputs correctly");
+		Assert.HasCount(provider.HashLengthBytes, result, $"{providerName} should handle large inputs correctly");
 	}
 
 	[TestMethod]
