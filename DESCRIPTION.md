@@ -1,1 +1,1 @@
-A collection of serialization providers implementing ktsu.Abstractions.ISerializationProvider for popular .NET JSON libraries including Newtonsoft.Json and System.Text.Json.
+A comprehensive collection of provider implementations for the ktsu ecosystem, including serialization (Newtonsoft.Json, System.Text.Json), hashing (MD5, SHA1, SHA256, SHA384, SHA512, FNV1/FNV1a), compression (Gzip), encryption (AES), file system (Native), and obfuscation (Base64) providers. All implementations follow the provider pattern with standardized interfaces from ktsu.Abstractions.
