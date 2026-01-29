@@ -1,13 +1,12 @@
-## v1.0.3-pre.5 (prerelease)
+## v1.0.3 (patch)
 
-Changes since v1.0.3-pre.4:
+Changes since v1.0.2:
 
-- Sync global.json ([@ktsu[bot]](https://github.com/ktsu[bot]))
-- Merge remote-tracking branch 'refs/remotes/origin/main' ([@ktsu[bot]](https://github.com/ktsu[bot]))
-- Sync scripts\update-winget-manifests.ps1 ([@ktsu[bot]](https://github.com/ktsu[bot]))
-- Sync global.json ([@ktsu[bot]](https://github.com/ktsu[bot]))
-- Sync .github\workflows\dotnet.yml ([@ktsu[bot]](https://github.com/ktsu[bot]))
-- Sync .gitignore ([@ktsu[bot]](https://github.com/ktsu[bot]))
+- Change project SDK from Microsoft.NET.Sdk to MSTest.Sdk ([@matt-edmondson](https://github.com/matt-edmondson))
+- Update target framework to net10.0 and adjust assertions in tests ([@matt-edmondson](https://github.com/matt-edmondson))
+- Update docs and api compatibility files ([@matt-edmondson](https://github.com/matt-edmondson))
+- Add project references and update AssemblyInfo for testing and source linking ([@matt-edmondson](https://github.com/matt-edmondson))
+- Add CLAUDE.md for project guidance and documentation ([@matt-edmondson](https://github.com/matt-edmondson))
 ## v1.0.3-pre.4 (prerelease)
 
 Changes since v1.0.3-pre.3:
