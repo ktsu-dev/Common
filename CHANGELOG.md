@@ -1,9 +1,8 @@
-## v1.0.5-pre.7 (prerelease)
+## v1.0.5 (patch)
 
-Changes since v1.0.5-pre.6:
+Changes since v1.0.4:
 
-- Merge remote-tracking branch 'refs/remotes/origin/main' ([@ktsu[bot]](https://github.com/ktsu[bot]))
-- Sync scripts\update-winget-manifests.ps1 ([@ktsu[bot]](https://github.com/ktsu[bot]))
+- Add .gitignore and project.yml for Serena configuration ([@matt-edmondson](https://github.com/matt-edmondson))
 ## v1.0.5-pre.7 (prerelease)
 
 Changes since v1.0.5-pre.6:
