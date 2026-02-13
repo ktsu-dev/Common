@@ -29,6 +29,9 @@ public static class ServiceCollectionExtensions
 	public static ServiceCollection AddCompressionProviders(this ServiceCollection services)
 	{
 		services.AddSingleton<ICompressionProvider, Gzip>();
+		services.AddSingleton<ICompressionProvider, Brotli>();
+		services.AddSingleton<ICompressionProvider, Deflate>();
+		services.AddSingleton<ICompressionProvider, ZLib>();
 		return services;
 	}
 
@@ -55,12 +58,19 @@ public static class ServiceCollectionExtensions
 		services.AddSingleton<IHashProvider, FNV1_64>();
 		services.AddSingleton<IHashProvider, FNV1a_32>();
 		services.AddSingleton<IHashProvider, FNV1a_64>();
+		services.AddSingleton<IHashProvider, CRC32>();
+		services.AddSingleton<IHashProvider, CRC64>();
+		services.AddSingleton<IHashProvider, XxHash32>();
+		services.AddSingleton<IHashProvider, XxHash64>();
+		services.AddSingleton<IHashProvider, XxHash3>();
+		services.AddSingleton<IHashProvider, XxHash128>();
 		return services;
 	}
 
 	public static ServiceCollection AddObfuscationProviders(this ServiceCollection services)
 	{
 		services.AddSingleton<IObfuscationProvider, Base64>();
+		services.AddSingleton<IObfuscationProvider, Hex>();
 		return services;
 	}
 

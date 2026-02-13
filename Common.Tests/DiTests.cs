@@ -6,12 +6,8 @@ namespace ktsu.Common.Tests;
 
 using System.Collections.Generic;
 using ktsu.Abstractions;
-using ktsu.CompressionProviders;
 using ktsu.EncryptionProviders;
 using ktsu.FileSystemProviders;
-using ktsu.HashProviders;
-using ktsu.ObfuscationProviders;
-using ktsu.SerializationProviders;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -22,28 +18,7 @@ public class DiTests
 	{
 		ServiceCollection services = new();
 
-		// Register concrete providers
-		services.AddSingleton<ICompressionProvider, Gzip>();
-		services.AddSingleton<IEncryptionProvider, Aes>();
-		services.AddSingleton<IFileSystemProvider, Native>();
-
-		// Hash providers: register all available; resolve by IEnumerable<IHashProvider>
-		services.AddSingleton<IHashProvider, MD5>();
-		services.AddSingleton<IHashProvider, SHA1>();
-		services.AddSingleton<IHashProvider, SHA256>();
-		services.AddSingleton<IHashProvider, SHA384>();
-		services.AddSingleton<IHashProvider, SHA512>();
-		services.AddSingleton<IHashProvider, FNV1_32>();
-		services.AddSingleton<IHashProvider, FNV1a_32>();
-		services.AddSingleton<IHashProvider, FNV1_64>();
-		services.AddSingleton<IHashProvider, FNV1a_64>();
-
-		services.AddSingleton<IObfuscationProvider, Base64>();
-
-		// Two different implementations for ISerializationProvider; resolve by IEnumerable
-		services.AddSingleton<ISerializationProvider, NewtonsoftJson>();
-		services.AddSingleton<ISerializationProvider, SystemTextJson>();
-
+		services.AddCommon();
 		return services.BuildServiceProvider();
 	}
 
@@ -53,10 +28,6 @@ public class DiTests
 		using ServiceProvider serviceProvider = BuildProvider();
 
 		// Test single-implementation providers
-		ICompressionProvider compression = serviceProvider.GetRequiredService<ICompressionProvider>();
-		Assert.IsNotNull(compression);
-		Assert.IsInstanceOfType<Gzip>(compression);
-
 		IEncryptionProvider encryption = serviceProvider.GetRequiredService<IEncryptionProvider>();
 		Assert.IsNotNull(encryption);
 		Assert.IsInstanceOfType<Aes>(encryption);
@@ -64,10 +35,36 @@ public class DiTests
 		IFileSystemProvider fileSystem = serviceProvider.GetRequiredService<IFileSystemProvider>();
 		Assert.IsNotNull(fileSystem);
 		Assert.IsInstanceOfType<Native>(fileSystem);
+	}
 
-		IObfuscationProvider obfuscation = serviceProvider.GetRequiredService<IObfuscationProvider>();
-		Assert.IsNotNull(obfuscation);
-		Assert.IsInstanceOfType<Base64>(obfuscation);
+	[TestMethod]
+	public void DI_Can_Resolve_Multiple_Compression_Providers()
+	{
+		using ServiceProvider serviceProvider = BuildProvider();
+
+		IEnumerable<ICompressionProvider> compressionProviders = serviceProvider.GetServices<ICompressionProvider>();
+		ICompressionProvider[] providers = [.. compressionProviders];
+
+		Assert.HasCount(4, providers, "Should resolve all 4 compression providers");
+
+		string[] expectedTypes = ["Brotli", "Deflate", "Gzip", "ZLib"];
+		string[] actualTypes = [.. providers.Select(p => p.GetType().Name).OrderBy(n => n)];
+		CollectionAssert.AreEquivalent(expectedTypes, actualTypes);
+	}
+
+	[TestMethod]
+	public void DI_Can_Resolve_Multiple_Obfuscation_Providers()
+	{
+		using ServiceProvider serviceProvider = BuildProvider();
+
+		IEnumerable<IObfuscationProvider> obfuscationProviders = serviceProvider.GetServices<IObfuscationProvider>();
+		IObfuscationProvider[] providers = [.. obfuscationProviders];
+
+		Assert.HasCount(2, providers, "Should resolve both obfuscation providers");
+
+		string[] expectedTypes = ["Base64", "Hex"];
+		string[] actualTypes = [.. providers.Select(p => p.GetType().Name).OrderBy(n => n)];
+		CollectionAssert.AreEquivalent(expectedTypes, actualTypes);
 	}
 
 	[TestMethod]
@@ -78,10 +75,10 @@ public class DiTests
 		IEnumerable<IHashProvider> hashProviders = serviceProvider.GetServices<IHashProvider>();
 		IHashProvider[] providers = [.. hashProviders];
 
-		Assert.HasCount(9, providers, "Should resolve all 9 hash providers");
+		Assert.HasCount(15, providers, "Should resolve all 15 hash providers");
 
 		// Verify all expected types are present
-		string[] expectedTypes = ["MD5", "SHA1", "SHA256", "SHA384", "SHA512", "FNV1_32", "FNV1a_32", "FNV1_64", "FNV1a_64"];
+		string[] expectedTypes = ["MD5", "SHA1", "SHA256", "SHA384", "SHA512", "FNV1_32", "FNV1a_32", "FNV1_64", "FNV1a_64", "CRC32", "CRC64", "XxHash32", "XxHash64", "XxHash3", "XxHash128"];
 		string[] actualTypes = [.. providers.Select(p => p.GetType().Name).OrderBy(n => n)];
 		CollectionAssert.AreEquivalent(expectedTypes, actualTypes);
 	}

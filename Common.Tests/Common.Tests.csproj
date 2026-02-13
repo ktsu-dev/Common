@@ -27,8 +27,18 @@
     <ProjectReference Include="..\HashProviders\FNV1_64\FNV1_64.csproj" />
     <ProjectReference Include="..\HashProviders\FNV1a_64\FNV1a_64.csproj" />
     <ProjectReference Include="..\ObfuscationProviders\Base64\Base64.csproj" />
+    <ProjectReference Include="..\ObfuscationProviders\Hex\Hex.csproj" />
     <ProjectReference Include="..\SerializationProviders\NewtonsoftJson\NewtonsoftJson.csproj" />
     <ProjectReference Include="..\SerializationProviders\SystemTextJson\SystemTextJson.csproj" />
+    <ProjectReference Include="..\CompressionProviders\Brotli\Brotli.csproj" />
+    <ProjectReference Include="..\CompressionProviders\Deflate\Deflate.csproj" />
+    <ProjectReference Include="..\CompressionProviders\ZLib\ZLib.csproj" />
+    <ProjectReference Include="..\HashProviders\CRC32\CRC32.csproj" />
+    <ProjectReference Include="..\HashProviders\CRC64\CRC64.csproj" />
+    <ProjectReference Include="..\HashProviders\XxHash32\XxHash32.csproj" />
+    <ProjectReference Include="..\HashProviders\XxHash64\XxHash64.csproj" />
+    <ProjectReference Include="..\HashProviders\XxHash3\XxHash3.csproj" />
+    <ProjectReference Include="..\HashProviders\XxHash128\XxHash128.csproj" />
   </ItemGroup>
 
 </Project>
