@@ -1,3 +1,8 @@
+## v1.0.6 (patch)
+
+Changes since v1.0.5:
+
+- Add compression, hashing, and obfuscation providers ([@matt-edmondson](https://github.com/matt-edmondson))
 ## v1.0.5 (patch)
 
 Changes since v1.0.4:
@@ -45,11 +50,7 @@ Changes since v1.0.5-pre.1:
 - Sync scripts\PSBuild.psm1 ([@ktsu[bot]](https://github.com/ktsu[bot]))
 ## v1.0.5-pre.1 (prerelease)
 
-Changes since v1.0.4:
-
-- Sync global.json ([@ktsu[bot]](https://github.com/ktsu[bot]))
-- Sync scripts\update-winget-manifests.ps1 ([@ktsu[bot]](https://github.com/ktsu[bot]))
-- Sync COPYRIGHT.md ([@ktsu[bot]](https://github.com/ktsu[bot]))
+Incremental prerelease update.
 ## v1.0.4 (patch)
 
 Changes since v1.0.3:
