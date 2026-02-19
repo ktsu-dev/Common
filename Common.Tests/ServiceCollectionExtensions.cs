@@ -6,10 +6,9 @@ namespace ktsu.Common.Tests;
 
 using ktsu.Abstractions;
 using ktsu.CompressionProviders;
+using ktsu.ConfigurationProviders;
 using ktsu.EncryptionProviders;
-using ktsu.FileSystemProviders;
 using ktsu.HashProviders;
-using ktsu.ObfuscationProviders;
 using ktsu.SerializationProviders;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,11 +16,18 @@ public static class ServiceCollectionExtensions
 {
 	public static ServiceCollection AddCommon(this ServiceCollection services)
 	{
+		services.AddCacheProviders();
+		services.AddCommandExecutors();
 		services.AddCompressionProviders();
+		services.AddConfigurationProviders();
+		services.AddEncodingProviders();
 		services.AddEncryptionProviders();
 		services.AddFileSystemProviders();
 		services.AddHashProviders();
+		services.AddLoggingProviders();
+		services.AddNavigationProviders();
 		services.AddObfuscationProviders();
+		services.AddPersistenceProviders();
 		services.AddSerializationProviders();
 		return services;
 	}
@@ -43,7 +49,7 @@ public static class ServiceCollectionExtensions
 
 	public static ServiceCollection AddFileSystemProviders(this ServiceCollection services)
 	{
-		services.AddSingleton<IFileSystemProvider, Native>();
+		services.AddSingleton<IFileSystemProvider, FileSystemProviders.Native>();
 		return services;
 	}
 
@@ -69,8 +75,8 @@ public static class ServiceCollectionExtensions
 
 	public static ServiceCollection AddObfuscationProviders(this ServiceCollection services)
 	{
-		services.AddSingleton<IObfuscationProvider, Base64>();
-		services.AddSingleton<IObfuscationProvider, Hex>();
+		services.AddSingleton<IObfuscationProvider, ObfuscationProviders.Base64>();
+		services.AddSingleton<IObfuscationProvider, ObfuscationProviders.Hex>();
 		return services;
 	}
 
@@ -78,6 +84,51 @@ public static class ServiceCollectionExtensions
 	{
 		services.AddSingleton<ISerializationProvider, SystemTextJson>();
 		services.AddSingleton<ISerializationProvider, NewtonsoftJson>();
+		return services;
+	}
+
+	public static ServiceCollection AddEncodingProviders(this ServiceCollection services)
+	{
+		services.AddSingleton<IEncodingProvider, EncodingProviders.Base64>();
+		services.AddSingleton<IEncodingProvider, EncodingProviders.Hex>();
+		return services;
+	}
+
+	public static ServiceCollection AddConfigurationProviders(this ServiceCollection services)
+	{
+		services.AddSingleton<IConfigurationProvider, Json>();
+		services.AddSingleton<IConfigurationProvider, Yaml>();
+		services.AddSingleton<IConfigurationProvider, Toml>();
+		return services;
+	}
+
+	public static ServiceCollection AddCommandExecutors(this ServiceCollection services)
+	{
+		services.AddSingleton<ICommandExecutor, CommandExecutors.Native>();
+		return services;
+	}
+
+	public static ServiceCollection AddLoggingProviders(this ServiceCollection services)
+	{
+		services.AddSingleton<ILoggingProvider, LoggingProviders.Console>();
+		return services;
+	}
+
+	public static ServiceCollection AddCacheProviders(this ServiceCollection services)
+	{
+		services.AddSingleton(typeof(ICacheProvider<,>), typeof(CacheProviders.InMemory<,>));
+		return services;
+	}
+
+	public static ServiceCollection AddNavigationProviders(this ServiceCollection services)
+	{
+		services.AddTransient(typeof(INavigationProvider<>), typeof(NavigationProviders.InMemory<>));
+		return services;
+	}
+
+	public static ServiceCollection AddPersistenceProviders(this ServiceCollection services)
+	{
+		services.AddSingleton(typeof(IPersistenceProvider<>), typeof(PersistenceProviders.InMemory<>));
 		return services;
 	}
 }

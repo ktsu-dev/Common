@@ -7,7 +7,6 @@ namespace ktsu.Common.Tests;
 using System.Collections.Generic;
 using ktsu.Abstractions;
 using ktsu.EncryptionProviders;
-using ktsu.FileSystemProviders;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -34,7 +33,15 @@ public class DiTests
 
 		IFileSystemProvider fileSystem = serviceProvider.GetRequiredService<IFileSystemProvider>();
 		Assert.IsNotNull(fileSystem);
-		Assert.IsInstanceOfType<Native>(fileSystem);
+		Assert.IsInstanceOfType<FileSystemProviders.Native>(fileSystem);
+
+		ICommandExecutor commandExecutor = serviceProvider.GetRequiredService<ICommandExecutor>();
+		Assert.IsNotNull(commandExecutor);
+		Assert.IsInstanceOfType<CommandExecutors.Native>(commandExecutor);
+
+		ILoggingProvider logging = serviceProvider.GetRequiredService<ILoggingProvider>();
+		Assert.IsNotNull(logging);
+		Assert.IsInstanceOfType<LoggingProviders.Console>(logging);
 	}
 
 	[TestMethod]
@@ -81,6 +88,51 @@ public class DiTests
 		string[] expectedTypes = ["MD5", "SHA1", "SHA256", "SHA384", "SHA512", "FNV1_32", "FNV1a_32", "FNV1_64", "FNV1a_64", "CRC32", "CRC64", "XxHash32", "XxHash64", "XxHash3", "XxHash128"];
 		string[] actualTypes = [.. providers.Select(p => p.GetType().Name).OrderBy(n => n)];
 		CollectionAssert.AreEquivalent(expectedTypes, actualTypes);
+	}
+
+	[TestMethod]
+	public void DI_Can_Resolve_Multiple_Encoding_Providers()
+	{
+		using ServiceProvider serviceProvider = BuildProvider();
+
+		IEnumerable<IEncodingProvider> encodingProviders = serviceProvider.GetServices<IEncodingProvider>();
+		IEncodingProvider[] providers = [.. encodingProviders];
+
+		Assert.HasCount(2, providers, "Should resolve both encoding providers");
+
+		string[] expectedTypes = ["Base64", "Hex"];
+		string[] actualTypes = [.. providers.Select(p => p.GetType().Name).OrderBy(n => n)];
+		CollectionAssert.AreEquivalent(expectedTypes, actualTypes);
+	}
+
+	[TestMethod]
+	public void DI_Can_Resolve_Multiple_Configuration_Providers()
+	{
+		using ServiceProvider serviceProvider = BuildProvider();
+
+		IEnumerable<IConfigurationProvider> configProviders = serviceProvider.GetServices<IConfigurationProvider>();
+		IConfigurationProvider[] providers = [.. configProviders];
+
+		Assert.HasCount(3, providers, "Should resolve all 3 configuration providers");
+
+		string[] expectedTypes = ["Json", "Toml", "Yaml"];
+		string[] actualTypes = [.. providers.Select(p => p.GetType().Name).OrderBy(n => n)];
+		CollectionAssert.AreEquivalent(expectedTypes, actualTypes);
+	}
+
+	[TestMethod]
+	public void DI_Can_Resolve_Generic_Providers()
+	{
+		using ServiceProvider serviceProvider = BuildProvider();
+
+		ICacheProvider<string, int> cache = serviceProvider.GetRequiredService<ICacheProvider<string, int>>();
+		Assert.IsNotNull(cache, "Should resolve cache provider");
+
+		INavigationProvider<string> nav = serviceProvider.GetRequiredService<INavigationProvider<string>>();
+		Assert.IsNotNull(nav, "Should resolve navigation provider");
+
+		IPersistenceProvider<string> persistence = serviceProvider.GetRequiredService<IPersistenceProvider<string>>();
+		Assert.IsNotNull(persistence, "Should resolve persistence provider");
 	}
 
 	[TestMethod]
