@@ -50,12 +50,12 @@ public class Base64 : IObfuscationProvider
 	/// <summary>
 	/// Tries to obfuscate the data from the reader and write the result to the writer.
 	/// </summary>
-	/// <param name="reader">The reader to read the data from.</param>
-	/// <param name="writer">The writer to write the obfuscated data to.</param>
+	/// <param name="data">The data to obfuscate.</param>
+	/// <param name="destination">The destination to write the obfuscated data to.</param>
 	/// <returns>True if the obfuscation was successful, false otherwise.</returns>
-	public bool TryObfuscate(Stream reader, Stream writer)
+	public bool TryObfuscate(Stream data, Stream destination)
 	{
-		if (reader is null || writer is null)
+		if (data is null || destination is null)
 		{
 			return false;
 		}
@@ -63,13 +63,13 @@ public class Base64 : IObfuscationProvider
 		try
 		{
 			using MemoryStream inputBuffer = new();
-			reader.CopyTo(inputBuffer);
+			data.CopyTo(inputBuffer);
 			byte[] inputData = inputBuffer.ToArray();
 
 			string base64String = Convert.ToBase64String(inputData);
 			byte[] obfuscatedData = Encoding.UTF8.GetBytes(base64String);
 
-			writer.Write(obfuscatedData, 0, obfuscatedData.Length);
+			destination.Write(obfuscatedData, 0, obfuscatedData.Length);
 			return true;
 		}
 		catch (ArgumentException)
@@ -93,24 +93,24 @@ public class Base64 : IObfuscationProvider
 	/// <summary>
 	/// Tries to deobfuscate the data from the span and write the result to the destination.
 	/// </summary>
-	/// <param name="data">The data to deobfuscate.</param>
+	/// <param name="obfuscatedData">The obfuscated data to deobfuscate.</param>
 	/// <param name="destination">The destination to write the deobfuscated data to.</param>
 	/// <returns>True if the deobfuscation was successful, false otherwise.</returns>
-	public bool TryDeobfuscate(ReadOnlySpan<byte> data, Span<byte> destination)
+	public bool TryDeobfuscate(ReadOnlySpan<byte> obfuscatedData, Span<byte> destination)
 	{
 		try
 		{
 			// Find the actual length of obfuscated data (excluding trailing zeros)
-			ReadOnlySpan<byte> actualData = data;
-			int lastNonZero = data.Length - 1;
-			while (lastNonZero >= 0 && data[lastNonZero] == 0)
+			ReadOnlySpan<byte> actualData = obfuscatedData;
+			int lastNonZero = obfuscatedData.Length - 1;
+			while (lastNonZero >= 0 && obfuscatedData[lastNonZero] == 0)
 			{
 				lastNonZero--;
 			}
 
 			if (lastNonZero >= 0)
 			{
-				actualData = data[..(lastNonZero + 1)];
+				actualData = obfuscatedData[..(lastNonZero + 1)];
 			}
 			else
 			{
@@ -143,12 +143,12 @@ public class Base64 : IObfuscationProvider
 	/// <summary>
 	/// Tries to deobfuscate the data from the reader and write the result to the writer.
 	/// </summary>
-	/// <param name="reader">The reader to read the data from.</param>
-	/// <param name="writer">The writer to write the deobfuscated data to.</param>
+	/// <param name="obfuscatedData">The obfuscated data to deobfuscate.</param>
+	/// <param name="destination">The destination to write the deobfuscated data to.</param>
 	/// <returns>True if the deobfuscation was successful, false otherwise.</returns>
-	public bool TryDeobfuscate(Stream reader, Stream writer)
+	public bool TryDeobfuscate(Stream obfuscatedData, Stream destination)
 	{
-		if (reader is null || writer is null)
+		if (obfuscatedData is null || destination is null)
 		{
 			return false;
 		}
@@ -156,11 +156,11 @@ public class Base64 : IObfuscationProvider
 		try
 		{
 			using MemoryStream inputBuffer = new();
-			reader.CopyTo(inputBuffer);
+			obfuscatedData.CopyTo(inputBuffer);
 			string base64String = Encoding.UTF8.GetString(inputBuffer.ToArray());
 
 			byte[] deobfuscatedData = Convert.FromBase64String(base64String);
-			writer.Write(deobfuscatedData, 0, deobfuscatedData.Length);
+			destination.Write(deobfuscatedData, 0, deobfuscatedData.Length);
 			return true;
 		}
 		catch (ArgumentException)
